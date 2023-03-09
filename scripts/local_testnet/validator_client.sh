@@ -30,4 +30,5 @@ exec lighthouse \
 	--testnet-dir $TESTNET_DIR \
 	--init-slashing-protection \
 	--beacon-nodes ${@:$OPTIND+1:1} \
+    --http --http-port ${@:$OPTIND+2:1} \
 	$VC_ARGS

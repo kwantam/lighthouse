@@ -110,6 +110,7 @@ sleeping 1
 # Start beacon nodes
 BN_udp_tcp_base=9000
 BN_http_port_base=8000
+VN_api_port_base=7000
 
 (( $VC_COUNT < $BN_COUNT )) && SAS=-s || SAS=
 
@@ -119,7 +120,10 @@ done
 
 # Start requested number of validator clients
 for (( vc=1; vc<=$VC_COUNT; vc++ )); do
-    execute_command_add_PID validator_node_$vc.log ./validator_client.sh $BUILDER_PROPOSALS -d $DEBUG_LEVEL $DATADIR/node_$vc http://localhost:$((BN_http_port_base + $vc))
+    execute_command_add_PID validator_node_$vc.log ./validator_client.sh \
+        $BUILDER_PROPOSALS -d $DEBUG_LEVEL $DATADIR/node_$vc \
+        http://localhost:$((BN_http_port_base + $vc)) \
+        $((VN_api_port_base + $vc))
 done
 
 echo "Started!"
